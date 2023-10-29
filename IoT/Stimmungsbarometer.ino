@@ -5,7 +5,7 @@
 #include <WiFiClient.h>
 
 //urls
-String url = "http://210301.de/iot/ws/1/a.txt";
+String url = "URL-Webserver";
 
 //pin settings
 const int pinRed   = D5;
@@ -13,8 +13,8 @@ const int pinYellow  = D3;
 const int pinGreen = D1;
 
 //wifi settings
-const char* ssid = "coding@HSNR";
-const char* pwd  = "CDHSNR23";
+const char* ssid = "Name";
+const char* pwd  = "Passwort";
 
 void setup() {
   Serial.begin(9600);
