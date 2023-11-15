@@ -1,5 +1,4 @@
 //Determine Code
-
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
@@ -19,21 +18,26 @@ const char* ssid = "coding@HSNR";
 const char* pwd  = "CDHSNR23";
 
 void setup() {
+  //start serial monitor
   Serial.begin(57600);
   delay(10);
 
+  //pinMode
   pinMode(buttonPin, INPUT);
   pinMode(pinRed, OUTPUT);
   pinMode(pinGreen, OUTPUT);
 
+  //Aufruf der Methoden
   connectWiFi();
   startupBlink();
 }
 
 void loop() {
+  //read button value
   buttonValue = digitalRead(buttonPin);
   Serial.print("Button: ");
   
+  //print ON or OFF
   if(buttonValue == 0) {
     Serial.println("OFF");
   }
@@ -41,6 +45,7 @@ void loop() {
     Serial.println("ON");
   }
 
+  //readout the entry from webserver
   if(WiFi.status() == WL_CONNECTED) {
     WiFiClient client;
     HTTPClient http;
@@ -61,6 +66,7 @@ void loop() {
 
     http.end();
 
+    //change colore due to button
     if(payload == "gruen") {
       digitalWrite(pinRed, LOW);
       digitalWrite(pinGreen, HIGH);
@@ -70,6 +76,7 @@ void loop() {
       digitalWrite(pinGreen, LOW);
     }
 
+    //set value on webserver like button action
     if(buttonValue == 0) {
       http.begin(client, "http://210301.de/iot/ws/3/ws.php?p=gruen");
       httpGETCode = http.GET();
@@ -94,7 +101,7 @@ void loop() {
     delay(1000);
   }
 }
-
+//test method
 void startupBlink(){
   
   digitalWrite(pinRed, HIGH);
@@ -111,7 +118,7 @@ void startupBlink(){
   digitalWrite(pinGreen, LOW);
   
 }
-
+//connect WiFi
 void connectWiFi() {
   Serial.println("");
   Serial.print("Connecting to ");
